@@ -1,0 +1,1 @@
+// This file has been removed to support static deployment without API dependencies.
