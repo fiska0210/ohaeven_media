@@ -1,10 +1,14 @@
-
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
+// 針對 https://fiska0210.github.io/ohaeven_media/ 進行設定
 export default defineConfig({
   plugins: [react()],
-  base: '/ohaeven_media/', // 使用相對路徑，確保部署在 GitHub Pages 子路徑時資源讀取正確
+  base: '/ohaeven_media/',
+  build: {
+    outDir: 'dist',
+    assetsDir: 'assets',
+  },
   server: {
     port: 5173,
     open: true
