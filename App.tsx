@@ -4,25 +4,15 @@ import { MediaItem } from './types';
 import { MediaCard } from './components/MediaCard';
 import { MediaModal } from './components/MediaModal';
 
-// 初始資料：請將 id 替換為您 Google Drive 的檔案 ID
 // thumbnailUrl 與 sourceUrl 現在都建議直接放入 Drive ID
-// https://drive.google.com/file/d/1Vm2PDm1m8J9T42FS27m8zXO5fwjDgjSZ/view?usp=drive_link
-// https://drive.google.com/file/d/1h9DFgvIHpfgWdBSN7j7cWsOw1W81u3L2/view?usp=drive_link
-
-/**
- * 重要說明：
- * 1. Google Drive 檔案必須設定為「知道連結的人皆可查看」。
- * 2. 獲取 ID 的方法：分享連結中 d/ 之後、/view 之前的字串。
- *    例如：https://drive.google.com/file/d/1ABCDE.../view -> ID 就是 1ABCDE...
- */
 
 const INITIAL_MEDIA: MediaItem[] = [
   {
     id: '1',
     title: '2026 NMIXX 1st World Tour Day2',
-    description: '我會成為不愧於大家，無論到哪都想要炫耀的歌手。所以無論在近處還是遠遠的，請繼續關注著我！',
-    thumbnailUrl: '1Vm2PDm1m8J9T42FS27m8zXO5fwjDgjSZ', // 替換成您的圖片 ID
-    sourceUrl: '1h9DFgvIHpfgWdBSN7j7cWsOw1W81u3L2',    // 替換成您的圖片 ID
+    description: ' "여러분들에게 안 부끄럽고\n 어딜가나 자랑하고 싶은\n 그런 가수가 되겠습니다\n 가까이서든 멀리서든\n 지켜봐 주세요!" \n\n「我會成為不愧於大家，\n無論到哪都想要炫耀的歌手。\n所以無論在近處還是遠遠的，\n請繼續關注著我！」',
+    thumbnailUrl: '1Vm2PDm1m8J9T42FS27m8zXO5fwjDgjSZ',
+    sourceUrl: '1h9DFgvIHpfgWdBSN7j7cWsOw1W81u3L2',
     type: 'video',
     category: 'Photocard',
     date: '2025/11/30'
@@ -30,16 +20,26 @@ const INITIAL_MEDIA: MediaItem[] = [
   {
     id: '2',
     title: 'NMIXX의 그림일기📒 Ep.1',
-    description: 'Austin......',
-    thumbnailUrl: '1amhe4lCzmb2u3u8QYGUpu0ikmtF9fjhA', // 建議使用圖片 ID 作為影片封面
-    sourceUrl: '192hcwzQhI4QnnaQv39kBscl1PCZClPq6',    // 替換成您的影片 ID
+    description: ' "아, 그럼 엔써아\n 내 어떤 모습이...\n 엔써들를 끌어당겼어?" \n By 오해원(X) 오스턴! \n\n 「呀 所以NSWER啊 \n 我的什麼樣的魅力... \n 讓NSWER著迷呢？ \n By 吳海嫄(X) Austin!」',
+    thumbnailUrl: '1amhe4lCzmb2u3u8QYGUpu0ikmtF9fjhA',
+    sourceUrl: '192hcwzQhI4QnnaQv39kBscl1PCZClPq6',
     type: 'video', // image
     category: 'Photocard',
-    date: '2024/06/20'
+    date: ''
+  },
+  {
+    id: '3',
+    title: 'MARIE CLAIRE Korea June 2025',
+    description: '「為什麼在有限的生命中還要執著於忌妒和貪心呢。\n 不如在這段時間裡相愛吧。 \n 就那樣唱著歌、跳舞吧。\n\n 希望能夠放下猜忌、忌妒，沒有煩惱的去愛 \n 我夢想著那樣的世界」',
+    thumbnailUrl: '1EMnFmiZE-mR6RV9ey9NnwVxzEKONNzWK',
+    sourceUrl: '1eVoxUljZYtWVbOrkvBHkDh2CqsWYpP6O',
+    type: 'image',
+    category: 'Photocard',
+    date: '2025/06/06'
   }
 ];
 
-const CATEGORIES = ['All', 'Travel', 'Nature', 'Architecture', 'Urban'];
+const CATEGORIES = ['All', 'Photocard', 'Stage', 'Pictorial', 'Variety Shows'];
 
 export default function App() {
   const [media] = useState<MediaItem[]>(INITIAL_MEDIA);
@@ -64,7 +64,7 @@ export default function App() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600">
               <Library className="text-white" size={20} />
             </div>
-            <h1 className="text-lg font-bold text-white hidden sm:block">VividMemory</h1>
+            <h1 className="text-lg font-bold text-white hidden sm:block tracking-tight">Haewon Encyclopedia</h1>
           </div>
 
           <div className="flex-1 max-w-md mx-8">
@@ -72,24 +72,24 @@ export default function App() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
               <input 
                 type="text" 
-                placeholder="搜尋內容..."
+                placeholder="搜尋收藏..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full rounded-xl bg-white/5 border border-white/10 py-2 pl-10 pr-4 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500 transition-all"
+                className="w-full rounded-xl bg-white/5 border border-white/10 py-2.5 pl-10 pr-4 text-sm text-white focus:outline-none focus:ring-1 focus:ring-blue-500/50 transition-all placeholder:text-zinc-600"
               />
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <button 
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-white/10 text-white' : 'text-zinc-500 hover:text-white'}`}
+              className={`p-2.5 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-white/10 text-white shadow-inner' : 'text-zinc-500 hover:text-white'}`}
             >
               <LayoutGrid size={18} />
             </button>
             <button 
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-white/10 text-white' : 'text-zinc-500 hover:text-white'}`}
+              className={`p-2.5 rounded-xl transition-all ${viewMode === 'list' ? 'bg-white/10 text-white shadow-inner' : 'text-zinc-500 hover:text-white'}`}
             >
               <List size={18} />
             </button>
@@ -97,17 +97,19 @@ export default function App() {
         </div>
       </nav>
 
-      <main className="mx-auto mt-8 max-w-[1600px] px-6 pb-20">
-        <div className="flex flex-wrap gap-2 mb-8">
+      <main className="mx-auto mt-10 max-w-[1600px] px-6 pb-20">
+        <div className="flex flex-wrap gap-3 mb-10">
           {CATEGORIES.map(cat => (
             <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
-                activeCategory === cat ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white'
+              className={`px-5 py-2 rounded-full text-xs font-bold tracking-wide transition-all ${
+                activeCategory === cat 
+                  ? 'bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.2)] scale-105' 
+                  : 'bg-zinc-900/50 text-zinc-500 hover:bg-zinc-800 hover:text-white border border-white/5'
               }`}
             >
-              {cat}
+              {cat.toUpperCase()}
             </button>
           ))}
         </div>
@@ -127,6 +129,13 @@ export default function App() {
             <MediaCard key={item.id} item={item} onClick={setSelectedItem} />
           ))}
         </div>
+        
+        {filteredMedia.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-40 opacity-20">
+            <Library size={64} className="mb-4" />
+            <p className="text-xl font-medium">沒有找到相關內容</p>
+          </div>
+        )}
       </main>
 
       <MediaModal item={selectedItem} onClose={() => setSelectedItem(null)} />

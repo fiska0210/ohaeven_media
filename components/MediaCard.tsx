@@ -26,11 +26,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({ item, onClick }) => {
         1. 比例：修改下方 aspect-[4/3]。可選：aspect-video (16:9), aspect-square (1:1), aspect-[3/4] (直式)
         2. 圖片填充：object-cover 會填滿容器，object-contain 則會顯示完整圖片（可能留白）
       */}
-      <div className="aspect-video-[4/3] w-full overflow-hidden bg-zinc-800">
+      <div className="aspect-video-[4/3]s w-full overflow-hidden bg-zinc-800">
         <img 
           src={thumbUrl} 
           alt={item.title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="h-full w-full object-contain transition-transform duration-700 group-hover:scale-110"
           loading="lazy"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
