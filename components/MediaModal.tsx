@@ -20,13 +20,19 @@ export const MediaModal: React.FC<MediaModalProps> = ({ item, onClose }) => {
 
   const displayUrl = getDisplayUrl(item.sourceUrl, item.type);
 
+  // 彈窗內的比例計算
+  const modalAspectClass = item.aspectRatio === 'horizontal' 
+    ? 'aspect-[16/9]' 
+    : item.aspectRatio === 'square'
+    ? 'aspect-square'
+    : 'aspect-[9/16]';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-6 animate-in fade-in duration-300">
       <div className="absolute inset-0 bg-black/95 backdrop-blur-md" onClick={onClose} />
       
       <div className="relative flex h-full max-h-[90vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl md:flex-row shadow-[0_0_50px_rgba(0,0,0,0.8)] border border-white/10">
         
-        {/* 左側媒體區域 */}
         <div className="flex-[3] bg-zinc-950 flex items-center justify-center relative group overflow-hidden">
           <a 
             href={`https://drive.google.com/file/d/${item.sourceUrl}/view`}
@@ -41,7 +47,7 @@ export const MediaModal: React.FC<MediaModalProps> = ({ item, onClose }) => {
             <div className="w-full h-full flex items-center justify-center bg-black">
               <iframe 
                 src={displayUrl} 
-                className="w-full aspect-[9/16] max-h-full border-0"
+                className={`w-full ${modalAspectClass} max-h-full border-0`}
                 allow="autoplay; fullscreen"
                 title={item.title}
               />
@@ -65,7 +71,6 @@ export const MediaModal: React.FC<MediaModalProps> = ({ item, onClose }) => {
           </div>
         </div>
 
-        {/* 右側資訊欄 */}
         <div className="flex-1 flex flex-col p-8 bg-[#0a0a0a] border-l border-white/5 md:max-w-[380px] overflow-y-auto">
           <div className="flex justify-end mb-6">
             <button 
@@ -93,8 +98,7 @@ export const MediaModal: React.FC<MediaModalProps> = ({ item, onClose }) => {
 
           <div className="space-y-8 flex-1">
             <div className="space-y-3">
-              {/* <span className="block text-[10px] font-bold uppercase tracking-[2px] text-zinc-600">描述</span> */}
-              {/* 加入 whitespace-pre-wrap 類別 */}
+              <span className="block text-[10px] font-bold uppercase tracking-[2px] text-zinc-600">描述</span>
               <p className="text-[14px] text-zinc-400 leading-relaxed font-light whitespace-pre-wrap">
                 {item.description}
               </p>

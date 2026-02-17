@@ -1,13 +1,15 @@
 
 export type MediaType = 'image' | 'video';
+export type AspectRatio = 'vertical' | 'horizontal' | 'square';
 
 export interface MediaItem {
   id: string;
   thumbnailUrl: string;
-  sourceUrl: string; // The high quality image or video to show in modal
+  sourceUrl: string; 
   type: MediaType;
   title: string;
   description: string;
   category: string;
   date: string;
+  aspectRatio?: AspectRatio;
 }

@@ -15,7 +15,8 @@ const INITIAL_MEDIA: MediaItem[] = [
     sourceUrl: '1h9DFgvIHpfgWdBSN7j7cWsOw1W81u3L2',
     type: 'video',
     category: 'Photocard',
-    date: '2025/11/30'
+    date: '2025/11/30',
+    aspectRatio: 'horizontal'
   },
   {
     id: '2',
@@ -25,7 +26,8 @@ const INITIAL_MEDIA: MediaItem[] = [
     sourceUrl: '192hcwzQhI4QnnaQv39kBscl1PCZClPq6',
     type: 'video', // image
     category: 'Photocard',
-    date: ''
+    date: '',
+    aspectRatio: 'horizontal'
   },
   {
     id: '3',
@@ -35,11 +37,23 @@ const INITIAL_MEDIA: MediaItem[] = [
     sourceUrl: '1eVoxUljZYtWVbOrkvBHkDh2CqsWYpP6O',
     type: 'image',
     category: 'Photocard',
-    date: '2025/06/06'
+    date: '2025/06/06',
+    aspectRatio: 'horizontal' // vertical
+  },
+  {
+    id: '',
+    title: 'Exhibition Pamphlet',
+    description: 'More detial for the exhibition...',
+    thumbnailUrl: '1oigC8kH6vACs85zjvTCXCXVRwz7IJNrl',
+    sourceUrl: '1OIEGyw4DFOnfcuC9Ql8wKhKpT80ykfS6',
+    type: 'image',
+    category: 'Others',
+    date: '',
+    aspectRatio: 'vertical'
   }
 ];
 
-const CATEGORIES = ['All', 'Photocard', 'Stage', 'Pictorial', 'Variety Shows'];
+const CATEGORIES = ['All', 'Photocard', 'Stage', 'Pictorial', 'Variety Shows', 'Others'];
 
 export default function App() {
   const [media] = useState<MediaItem[]>(INITIAL_MEDIA);
@@ -64,7 +78,7 @@ export default function App() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600">
               <Library className="text-white" size={20} />
             </div>
-            <h1 className="text-lg font-bold text-white hidden sm:block tracking-tight">Haewon Encyclopedia</h1>
+            <h1 className="text-lg font-bold text-white hidden sm:block tracking-tight">VividMemory</h1>
           </div>
 
           <div className="flex-1 max-w-md mx-8">
@@ -114,15 +128,9 @@ export default function App() {
           ))}
         </div>
 
-        {/* 
-          調整欄數來改變卡片大小：
-          - 原本: lg:grid-cols-3
-          - 現在: lg:grid-cols-4 (卡片變小)
-          - 若要大卡片可改為: md:grid-cols-2
-        */}
-        <div className={`grid gap-6 ${
+        <div className={`grid gap-8 ${
           viewMode === 'grid' 
-            ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4' 
+            ? 'grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6' 
             : 'grid-cols-1 max-w-4xl mx-auto'
         }`}>
           {filteredMedia.map(item => (
