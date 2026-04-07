@@ -1,6 +1,7 @@
 import React from 'react';
 import { Play, Image as ImageIcon, Maximize2 } from 'lucide-react';
 import { MediaItem } from '../types';
+import { getThumbnailUrl } from '../lib/mediaUtils';
 
 interface MediaCardProps {
   item: MediaItem;
@@ -8,13 +9,7 @@ interface MediaCardProps {
 }
 
 export const MediaCard: React.FC<MediaCardProps> = ({ item, onClick }) => {
-  const getThumbnailUrl = (id: string) => {
-    if (!id) return '';
-    if (id.startsWith('http')) return id;
-    return `https://drive.google.com/uc?export=view&id=${id}`;
-  };
-
-  const thumbUrl = getThumbnailUrl(item.thumbnailUrl);
+  const thumbUrl = getThumbnailUrl(item);
 
   // 根據比例選擇 Tailwind 類別
   const aspectClass = item.aspectRatio === 'horizontal' 
@@ -34,11 +29,13 @@ export const MediaCard: React.FC<MediaCardProps> = ({ item, onClick }) => {
           alt={item.title}
           className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
           loading="lazy"
+          referrerPolicy="no-referrer"
           onError={(e) => {
             const target = e.target as HTMLImageElement;
-            if (!target.src.includes('thumbnail')) {
-               target.src = `https://drive.google.com/thumbnail?id=${item.thumbnailUrl}&sz=w800`;
-            } else {
+            if (item.type === 'video' && !target.src.includes('mqdefault')) {
+               // If maxresdefault fails, try mqdefault
+               target.src = `https://img.youtube.com/vi/${item.sourceUrl}/mqdefault.jpg`;
+            } else if (item.type === 'image' && !target.src.includes('unsplash')) {
                target.src = 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=800';
             }
           }}

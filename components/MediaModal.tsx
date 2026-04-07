@@ -1,6 +1,7 @@
-import React from 'react';
-import { X, Calendar, Tag, Share2 } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { X, Calendar, Tag, Share2, Play } from 'lucide-react';
 import { MediaItem } from '../types';
+import { getThumbnailUrl, getDisplayUrl } from '../lib/mediaUtils';
 
 interface MediaModalProps {
   item: MediaItem | null;
@@ -8,17 +9,16 @@ interface MediaModalProps {
 }
 
 export const MediaModal: React.FC<MediaModalProps> = ({ item, onClose }) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  useEffect(() => {
+    setIsPlaying(false);
+  }, [item]);
+
   if (!item) return null;
 
-  const getDisplayUrl = (sourceId: string, type: 'image' | 'video') => {
-    if (sourceId.startsWith('http')) return sourceId;
-    if (type === 'video') {
-      return `https://drive.google.com/file/d/${sourceId}/preview`;
-    }
-    return `https://drive.google.com/uc?export=view&id=${sourceId}`;
-  };
-
-  const displayUrl = getDisplayUrl(item.sourceUrl, item.type);
+  const displayUrl = getDisplayUrl(item);
+  const thumbUrl = getThumbnailUrl(item);
 
   // 彈窗內的比例計算
   const modalAspectClass = item.aspectRatio === 'horizontal' 
@@ -35,7 +35,7 @@ export const MediaModal: React.FC<MediaModalProps> = ({ item, onClose }) => {
         
         <div className="flex-[3] bg-zinc-950 flex items-center justify-center relative group overflow-hidden">
           <a 
-            href={`https://drive.google.com/file/d/${item.sourceUrl}/view`}
+            href={item.type === 'video' ? `https://www.youtube.com/shorts/${item.sourceUrl}` : item.sourceUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="absolute left-6 top-6 z-20 p-2.5 rounded-lg bg-black/60 text-white/70 hover:text-white hover:bg-black transition-all border border-white/10"
@@ -44,23 +44,46 @@ export const MediaModal: React.FC<MediaModalProps> = ({ item, onClose }) => {
           </a>
 
           {item.type === 'video' ? (
-            <div className="w-full h-full flex items-center justify-center bg-black">
-              <iframe 
-                src={displayUrl} 
-                className={`w-full ${modalAspectClass} max-h-full border-0`}
-                allow="autoplay; fullscreen"
-                title={item.title}
-              />
+            <div className="w-full h-full flex items-center justify-center bg-black relative">
+              {isPlaying ? (
+                <iframe 
+                  src={displayUrl} 
+                  className={`w-full ${modalAspectClass} max-h-full border-0`}
+                  allow="autoplay; fullscreen"
+                  title={item.title}
+                />
+              ) : (
+                <div className="relative w-full h-full flex items-center justify-center cursor-pointer group/play" onClick={() => setIsPlaying(true)}>
+                  <img 
+                    src={thumbUrl} 
+                    alt={item.title}
+                    className="h-full w-full object-contain p-2 opacity-60 group-hover/play:opacity-80 transition-opacity"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      if (item.type === 'video' && !target.src.includes('mqdefault')) {
+                        target.src = `https://img.youtube.com/vi/${item.sourceUrl}/mqdefault.jpg`;
+                      }
+                    }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="h-20 w-20 rounded-full bg-white/10 backdrop-blur-xl flex items-center justify-center border border-white/20 group-hover/play:scale-110 transition-transform duration-500">
+                      <Play size={40} className="text-white ml-2" fill="currentColor" />
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <img 
-              src={displayUrl} 
+              src={thumbUrl} 
               alt={item.title}
               className="h-full w-full object-contain p-2"
+              referrerPolicy="no-referrer"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
-                if (!target.src.includes('thumbnail')) {
-                    target.src = `https://drive.google.com/thumbnail?id=${item.sourceUrl}&sz=w2000`;
+                if (item.type === 'image' && !target.src.includes('unsplash')) {
+                    target.src = 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&q=80&w=800';
                 }
               }}
             />

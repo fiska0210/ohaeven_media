@@ -11,8 +11,8 @@ const INITIAL_MEDIA: MediaItem[] = [
     id: '1',
     title: '2026 NMIXX 1st World Tour Day2',
     description: ' "여러분들에게 안 부끄럽고\n 어딜가나 자랑하고 싶은\n 그런 가수가 되겠습니다\n 가까이서든 멀리서든\n 지켜봐 주세요!" \n\n「我會成為不愧於大家，\n無論到哪都想要炫耀的歌手。\n所以無論在近處還是遠遠的，\n請繼續關注著我！」',
-    thumbnailUrl: '1Vm2PDm1m8J9T42FS27m8zXO5fwjDgjSZ',
-    sourceUrl: '1h9DFgvIHpfgWdBSN7j7cWsOw1W81u3L2',
+    thumbnailUrl: '/assets/ver_A.png',
+    sourceUrl: 'hiCgIuMYAwo',
     type: 'video',
     category: 'Photocard',
     date: '2025/11/30',
@@ -22,8 +22,8 @@ const INITIAL_MEDIA: MediaItem[] = [
     id: '2',
     title: 'NMIXX의 그림일기📒 Ep.1',
     description: ' "아, 그럼 엔써아\n 내 어떤 모습이...\n 엔써들를 끌어당겼어?" \n By 오해원(X) 오스턴! \n\n 「呀 所以NSWER啊 \n 我的什麼樣的魅力... \n 讓NSWER著迷呢？ \n By 吳海嫄(X) Austin!」',
-    thumbnailUrl: '1amhe4lCzmb2u3u8QYGUpu0ikmtF9fjhA',
-    sourceUrl: '192hcwzQhI4QnnaQv39kBscl1PCZClPq6',
+    thumbnailUrl: '/assets/ver_B.png',
+    sourceUrl: 'ZaxoIO-FDM0',
     type: 'video', // image
     category: 'Photocard',
     date: '',
@@ -78,7 +78,7 @@ export default function App() {
             <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600">
               <Library className="text-white" size={20} />
             </div>
-            <h1 className="text-lg font-bold text-white hidden sm:block tracking-tight">VividMemory</h1>
+            <h1 className="text-lg font-bold text-white hidden sm:block tracking-tight">O'HAEVEN</h1>
           </div>
 
           <div className="flex-1 max-w-md mx-8">
